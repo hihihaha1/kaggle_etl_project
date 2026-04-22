@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine
 from logger_config import setup_logger
+import time
 import pandas as pd
 import os
 
@@ -60,6 +61,19 @@ def load_data(df):
         DATABASE_PORT = '5432'
         DATABASE_URL = f"postgresql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_DB}"
     engine = create_engine(DATABASE_URL)
+
+    max_retries = 5
+    for i in range(max_retries):
+        try:
+            with engine.connect() as conn:
+                logger.info("Попытка подключиться к базе")
+                break
+        except Exception:
+            logger.info("База еще не запущена. Повторная попытка через 5 сек.")
+            time.sleep(5)
+    else:
+        logger.error("Не удалось подключиться к базе")
+        return
 
     try:
         logger.info("Попытка записать данные в таблицу")
