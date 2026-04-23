@@ -1,6 +1,6 @@
 # Kaggle ETL project (Pet-проект)
 
-Отработка написания ETL-запросов с привязкой Docker, PostgreSQL и подробным логгированием.
+Отработка написания ETL-процессов с привязкой Docker, PostgreSQL и подробным логгированием.
 
 ### Что добавлено:
 **1)** Контейнеризация связки Python + PostgreSQL через Docker Compose.
